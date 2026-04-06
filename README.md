@@ -109,7 +109,7 @@ Add to your `.claude/settings.local.json`:
 ```json
 {
   "permissions": {
-    "allow": ["Bash(rbx:*)"]
+    "allow": ["Bash(rbxstudio:*)"]
   }
 }
 ```
