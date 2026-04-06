@@ -85,15 +85,18 @@ rbxstudio mouse 400,300 click
 
 ### Daemon mode
 
-For rapid-fire sessions, start the daemon to keep the MCP connection alive (~10ms vs ~300ms per call):
+The CLI automatically starts a background daemon on the first command. The daemon keeps a persistent MCP connection to Roblox Studio, so subsequent calls are fast (~10ms vs ~300ms):
 
 ```bash
-rbxstudio daemon start     # starts background process
+# The daemon starts automatically — no manual setup needed
+rbxstudio list             # first call: starts daemon + discovers Studio (~4-5s)
+rbxstudio tree             # subsequent calls: instant via daemon
+
+# Manual daemon management (optional)
+rbxstudio daemon start     # explicitly start the daemon
 rbxstudio daemon status    # check if running
 rbxstudio daemon stop      # shut down
 
-# All rbxstudio commands automatically use the daemon when it's running
-# Falls back to per-invocation if daemon is not available
 # Auto-exits after 10 minutes of inactivity
 ```
 
@@ -178,11 +181,13 @@ rbxstudio <command>
   │                              │
   │                              └─> persistent MCP connection ──> StudioMCP ──> Roblox Studio
   │
-  └─ no ──> spawn StudioMCP ──> handshake ──> tool call ──> format output ──> exit (~300ms)
+  └─ no ──> auto-start daemon ──> wait for Studio discovery (~3-5s) ──> tool call
 ```
 
-- **Per-invocation** (default): spawns StudioMCP process, does MCP handshake, makes one call, exits
-- **Daemon mode** (optional): background process keeps MCP connection alive on a Unix socket, auto-exits after 10 min idle
+- **Auto-start**: the daemon starts automatically on the first command if not already running
+- **Eager discovery**: on startup, the daemon connects to StudioMCP and polls until Roblox Studio is found (~3 seconds)
+- **Persistent connection**: once running, the daemon keeps the MCP connection alive on a Unix socket, auto-exits after 10 min idle
+- **Fallback**: if the daemon fails, commands fall back to single-shot per-invocation mode (~300ms)
 
 Built with:
 - [@modelcontextprotocol/sdk](https://www.npmjs.com/package/@modelcontextprotocol/sdk) — MCP client
