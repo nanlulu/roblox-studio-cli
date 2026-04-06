@@ -1,0 +1,32 @@
+{
+  "name": "rbx-studio-cli",
+  "version": "1.0.0",
+  "description": "CLI wrapper for Roblox Studio MCP server — saves tokens when used with Claude Code",
+  "type": "module",
+  "bin": {
+    "rbxstudio": "./bin/rbxstudio"
+  },
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "files": [
+    "bin/",
+    "dist/"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.12.0",
+    "commander": "^13.1.0"
+  },
+  "devDependencies": {
+    "tsup": "^8.4.0",
+    "typescript": "^5.7.0",
+    "vitest": "^3.1.0"
+  }
+}
