@@ -10,6 +10,7 @@ import { registerAssetCommands } from "./commands/assets.js";
 import { registerLuauCommands } from "./commands/luau.js";
 import { registerPlaytestCommands } from "./commands/playtest.js";
 import { registerInputCommands } from "./commands/input.js";
+import { registerSetupCommands } from "./commands/setup.js";
 
 const program = new Command();
 
@@ -27,6 +28,7 @@ registerAssetCommands(program);
 registerLuauCommands(program);
 registerPlaytestCommands(program);
 registerInputCommands(program);
+registerSetupCommands(program);
 
 // Raw escape hatch — call any MCP tool directly
 program

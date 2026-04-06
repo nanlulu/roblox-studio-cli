@@ -13,12 +13,23 @@ When Claude Code connects to the Roblox Studio MCP server, it loads all 17 tool 
 ## Installation
 
 ```bash
-# Clone and install
+npm install -g rbx-studio-cli
+rbxstudio setup    # installs Claude Code skill for auto-discovery
+```
+
+That's it. `rbxstudio` is now available globally and Claude Code will automatically know how to use it.
+
+To uninstall the Claude Code skill later: `rbxstudio uninstall`
+
+### From source
+
+```bash
 git clone https://github.com/nanlulu/roblox-studio-cli.git
 cd roblox-studio-cli
 npm install
 npm run build
-npm link    # makes 'rbxstudio' available globally
+npm link
+rbxstudio setup
 ```
 
 ### Prerequisites
@@ -96,15 +107,22 @@ rbxstudio --json <any command>              # get raw JSON output
 
 ## Claude Code Integration
 
+### How it works
+
+`rbxstudio setup` installs a [Claude Code skill](https://code.claude.com/docs/en/skills) at `~/.claude/skills/rbxstudio/SKILL.md`. This teaches Claude Code all the `rbxstudio` commands globally — it works from any project directory.
+
 ### Setup
 
-1. Build and link the CLI (see Installation above)
-2. **Remove** the Roblox Studio MCP server from your Claude Code MCP config (this is what saves the tokens)
-3. The `CLAUDE.md` in this repo automatically teaches Claude Code how to use `rbxstudio`
+1. Install the CLI and run setup (see Installation above)
+2. **Remove** the Roblox Studio MCP server from your Claude Code MCP config (this is what saves the tokens):
+   ```bash
+   claude mcp remove Roblox_Studio
+   ```
+3. Start a new Claude Code session — it will auto-discover the skill
 
 ### Permissions
 
-Add to your `.claude/settings.local.json`:
+When Claude Code first tries to run `rbxstudio`, it will ask for permission. You can pre-approve by adding to your `.claude/settings.json`:
 
 ```json
 {
