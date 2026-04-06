@@ -14,8 +14,8 @@ When Claude Code connects to the Roblox Studio MCP server, it loads all 17 tool 
 
 ```bash
 # Clone and install
-git clone https://github.com/user/rbx-studio-cli.git
-cd rbx-studio-cli
+git clone https://github.com/nanlulu/roblox-studio-cli.git
+cd roblox-studio-cli
 npm install
 npm run build
 npm link    # makes 'rbxstudio' available globally
