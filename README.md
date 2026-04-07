@@ -60,10 +60,13 @@ rbxstudio tree
 rbxstudio tree --path game.Workspace --type Part
 rbxstudio inspect game.Workspace.Baseplate
 
-# Edit a script
-rbxstudio edit game.ServerScriptService.MyScript --edits '[{"range":{"start":1,"end":1},"text":"-- edited\n"}]'
+# Edit a script (old_string/new_string format)
+rbxstudio edit game.ServerScriptService.MyScript --edits '[{"old_string":"print(\"hi\")","new_string":"print(\"hello\")"}]'
 
-# Execute Luau code
+# Create a new script (--class required for new scripts)
+rbxstudio edit game.ServerScriptService.NewScript --class Script --edits '[{"old_string":"","new_string":"print(\"hello world\")"}]'
+
+# Execute Luau code (print output goes to console, not return value)
 rbxstudio exec 'print(1+1)'
 rbxstudio exec --file script.luau
 
@@ -157,7 +160,7 @@ When Claude Code first tries to run `rbxstudio`, it will ask for permission. You
 | `rbxstudio list` | `list_roblox_studios` | List connected Studio instances |
 | `rbxstudio use <id>` | `set_active_studio` | Set active Studio |
 | `rbxstudio read <path>` | `script_read` | Read a script |
-| `rbxstudio edit <path>` | `multi_edit` | Edit a script |
+| `rbxstudio edit <path>` | `multi_edit` | Edit a script (`--class` for new) |
 | `rbxstudio search <query>` | `script_search` | Fuzzy search scripts |
 | `rbxstudio grep <pattern>` | `script_grep` | Regex search across scripts |
 | `rbxstudio tree` | `search_game_tree` | Explore instance hierarchy |

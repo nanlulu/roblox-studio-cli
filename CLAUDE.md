@@ -1,3 +1,13 @@
+## Doc sync rule
+When making any changes to commands, flags, or behavior, always check and update all three doc surfaces:
+1. `CLAUDE.md` (this file) — command reference for Claude Code in-project usage
+2. `README.md` — usage examples and command reference table
+3. `src/commands/setup.ts` (`SKILL_CONTENT`) — the Claude Code skill installed by `rbxstudio setup`
+
+All three must stay consistent. Do not commit without verifying they reflect the current CLI behavior.
+
+---
+
 # Roblox Studio CLI (`rbxstudio`)
 
 Use `rbxstudio` via Bash to interact with Roblox Studio. Always run `rbxstudio list` first to verify Studio is connected.
