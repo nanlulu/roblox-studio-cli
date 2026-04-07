@@ -30,24 +30,35 @@ export function registerScriptCommands(program: Command) {
     .command("edit <path>")
     .description("Apply edits to a script")
     .requiredOption("--edits <json>", "JSON array of edits")
-    .action(async (path: string, opts: { edits: string }) => {
-      let edits: unknown;
-      try {
-        edits = JSON.parse(opts.edits);
-      } catch {
-        console.error("Error: --edits must be valid JSON");
-        process.exit(1);
-      }
+    .option(
+      "--class <className>",
+      "Class type when creating a new script (Script, LocalScript, ModuleScript)",
+    )
+    .action(
+      async (path: string, opts: { edits: string; class?: string }) => {
+        let edits: unknown;
+        try {
+          edits = JSON.parse(opts.edits);
+        } catch {
+          console.error("Error: --edits must be valid JSON");
+          process.exit(1);
+        }
 
-      const result = await callTool("multi_edit", { file_path: path, edits });
+        const args: Record<string, unknown> = { file_path: path, edits };
+        if (opts.class) {
+          args.className = opts.class;
+        }
 
-      if (program.opts().json) {
-        output(JSON.stringify(extractJSON(result), null, 2));
-        return;
-      }
+        const result = await callTool("multi_edit", args);
 
-      output(extractText(result));
-    });
+        if (program.opts().json) {
+          output(JSON.stringify(extractJSON(result), null, 2));
+          return;
+        }
+
+        output(extractText(result));
+      },
+    );
 
   program
     .command("search <query>")

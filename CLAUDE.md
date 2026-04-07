@@ -17,7 +17,9 @@ Use `rbxstudio` via Bash to interact with Roblox Studio. Always run `rbxstudio l
 ### Edit Scripts
 - `rbxstudio edit <path> --edits '<json>'` — apply edits (uses old_string/new_string format)
   Example: `rbxstudio edit game.ServerScriptService.MyScript --edits '[{"old_string":"print(\"hi\")","new_string":"print(\"hello\")"}]'`
-  New script: `rbxstudio edit game.ServerScriptService.NewScript --edits '[{"old_string":"","new_string":"print(\"hello world\")"}]'`
+  New script: `rbxstudio edit game.ServerScriptService.NewScript --class Script --edits '[{"old_string":"","new_string":"print(\"hello world\")"}]'`
+- **Creating new scripts requires `--class`** — use `--class Script`, `--class LocalScript`, or `--class ModuleScript`
+  Without it, the MCP server may create a Folder instead of a script.
 
 ### Data Model
 - `rbxstudio tree` — show full game hierarchy
@@ -27,6 +29,7 @@ Use `rbxstudio` via Bash to interact with Roblox Studio. Always run `rbxstudio l
 ### Execute Luau
 - `rbxstudio exec '<code>'` — run Luau in Studio
 - `rbxstudio exec --file script.luau` — run from file
+- **Note:** `print()` output goes to the console buffer, not the exec return value. Use `rbxstudio console` to see print output.
 
 ### Assets
 - `rbxstudio mesh '<prompt>'` — generate 3D mesh from text
@@ -35,7 +38,7 @@ Use `rbxstudio` via Bash to interact with Roblox Studio. Always run `rbxstudio l
 
 ### Playtesting
 - `rbxstudio play start` / `rbxstudio play stop` — toggle playtest
-- `rbxstudio console` — get console output
+- `rbxstudio console` — get console output (cumulative since playtest start)
 
 ### Player Input (during playtest)
 - `rbxstudio nav '<target>'` — move character to position/instance
